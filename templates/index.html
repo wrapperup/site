@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}        
+    Welcome
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Home</h1>
+        {% if let Some(ctx) = ctx %}
+            Welcome {{ ctx.age }}
+        {% endif %}
+        <p>Hello and welcome!</p>
+    </section>
+{% endblock %}
