@@ -1,4 +1,4 @@
-use std::{future::Future, sync::Arc};
+use std::future::Future;
 
 use axum::{http::Request, middleware::Next, response::Response};
 
@@ -27,9 +27,6 @@ pub async fn provide_context<F: Future<Output = O>, O>(context: Context, f: F) -
     CONTEXT.scope(context, f).await
 }
 
-pub fn context<'a>() -> Option<&'a Context> {
-    match CONTEXT.try_with(|c| c as *const Context) {
-        Ok(ctx) => Some(unsafe { &*ctx }),
-        Err(_) => None,
-    }
+pub fn context() -> Option<Context> {
+    CONTEXT.try_with(|c| c.clone()).ok()
 }
